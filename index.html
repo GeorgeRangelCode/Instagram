@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Instagram</title>
+    <meta name="theme-color" content="#000000" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="icon"
+      href="./img/instagram.png"
+      type="image/gif"
+      sizes="16x16"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="./css/main.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body v-on:load="getData">
+    <div id="app">
+
+      <div class="post-list" >
+        <a href="" class="post" v-for="image in images">
+          <figure class="post-image">
+              <img
+                v-bind:src="image.urls.full"
+                alt=""
+              />
+          </figure>
+          <span class="post-overlay">
+            <p>
+              <span class="post-likes"
+                ><i class="fa fa-heart" aria-hidden="true"></i> 150</span
+              >
+              <span class="post-comments"
+                ><i class="fa fa-comment" aria-hidden="true"></i> 10</span
+              >
+            </p>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.6.6/dist/vue.js"></script>
+    <script>    
+
+      let app = new Vue({
+        el: "#app",
+
+        created() {
+          this.getData()
+        },
+
+        data: {
+          images: [],
+          test: 'jajaja'
+        },
+        methods: {
+          getData: function () {
+
+            fetch('https://api.unsplash.com/photos/?client_id=98b3558476f3d9d6895b41a42159a5ab47a4cdc960a83ec5511cc3a2b831bba5')
+            .then( (response) => {
+              // console.log(response)
+              response.json()
+                .then((data) => {
+                  console.log(data)
+                  this.images = data
+                })
+            })
+            .catch()
+
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
